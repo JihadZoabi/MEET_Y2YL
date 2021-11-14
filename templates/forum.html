@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Forum</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="/static/css/bootstrap.css" rel="stylesheet" crossorigin="anonymous">
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+
+</head>
+
+<body style = "min-height: 100vh;" class = "bg-dark bg-gradient text-white">
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="#">There4U</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNavDropdown">
+    <ul class="navbar-nav">
+      <li class="nav-item active">
+        <a class="nav-link" href="{{url_for('index')}}">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{{url_for('colors')}}">Color Detector</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{{url_for('forum')}}">Forum</a>
+      </li>
+        <li class="nav-item">
+            <a class ="nav-link" href = "{{url_for('logout')}}">Logout</a>
+        </li>
+    </ul>
+  </div>
+</nav>
+
+
+<div class="alert alert-light mx-auto mt-4" role="alert" style = "width:90%;">
+    <form>
+        <a href = "{{url_for('submit')}}" class = "text-decoration-none">
+            <input id = "ask" type = "textbutton" class="form-control" placeholder="Ask a Question">
+        </a>
+    </form>
+</div>
+<br>
+
+{% if questions %}
+    {% for question in questions %}
+<a href = "ask/{{question.question_id}}" class = "text-decoration-none">
+<div class = "container">
+    <div class =  "row justify-content-md-center mx-auto">
+        <div class = "col-2 bg-secondary p-2">
+            <p class ="m-1">Likes</p>
+        </div>
+        <div class = "col-10 bg-white text-dark p-2">
+            <p class = "m-1 font-weight-bold">{{question.title}}</p>
+        </div>
+    </div>
+    {% if question.image_link %}
+    <div class =  "row justify-content-md-center mx-auto">
+        <div class = "col-2 bg-secondary p-2">
+            <p class ="m-1"></p>
+        </div>
+        <div class = "col-10 bg-white text-dark p-2">
+            <img src = "data:image/webp;base64,{{question.image_link}}" class = "rounded img-fluid">
+        </div>
+    </div>
+    {% endif %}
+</div>
+</a>
+<br>
+    {% endfor %}
+{% endif %}
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+
+</html>

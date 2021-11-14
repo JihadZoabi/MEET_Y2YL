@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Color Detector</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="/static/css/bootstrap.css" rel="stylesheet" crossorigin="anonymous">
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+
+    <style>
+      body,html {
+      height: 100%;
+      overflow: hidden;
+      margin: 0;
+      }
+      video {
+      height: 60%;
+      margin-top: 15px !important;
+      }
+
+
+      #reverseicon, #shuttericon {
+      height: 60px;
+      }
+
+    </style>
+
+</head>
+<body style = "min-height: 100vh;" class = "bg-dark bg-gradient text-white">
+
+  <div class="select" style = "display:None;">
+    <label for="videoSource">Video source: </label><select id="videoSource"></select>
+  </div>
+
+  <div class = "container">
+        <div id="screenshot" class ="mx-auto" style="text-align:center; height: 100vh;">
+            <video class="videostream" class = "mx-auto" autoplay></video>
+            <img id="screenshot-img" style = "display:None;">
+            <canvas style="display:none;"></canvas>
+
+            <div class = "row m-4">
+                <div class = "col">
+                <p><button class="capture-button btn btn-light btn-md wbtn">
+                    <img id = "reverseicon" src = "/static/images/reverse.svg" /></button></p>
+                </div>
+
+                <div class = "col">
+                <form action="/colors" method="post">
+                    <p><button id="screenshot-button" class = "btn btn-light btn-md wbtn">
+                    <img id = "shuttericon" src = "/static/images/shutter.svg" /></button>
+                </div>
+            <p><input style = "display: None" type="text" name="imgLink" id="imgLink" readonly="readonly">
+        </form>
+        </p>
+                </div>
+        </div>
+  </div>
+
+<script src = "/static/js/camera.js"></script>
+</body>
+</html>

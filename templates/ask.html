@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Forum</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="/static/css/bootstrap.css" rel="stylesheet" crossorigin="anonymous">
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+
+    <style>
+    .bdge {
+        height: 21px;
+        background-color: orange;
+        color: #fff;
+        font-size: 11px;
+        padding: 8px;
+        border-radius: 4px;
+        line-height: 3px
+    }
+
+    .comments {
+        text-decoration: underline;
+        text-underline-position: under;
+        cursor: pointer
+    }
+
+    .dot {
+        height: 7px;
+        width: 7px;
+        margin-top: 3px;
+        background-color: #bbb;
+        border-radius: 50%;
+        display: inline-block
+    }
+
+    .hit-voting:hover {
+        color: blue
+    }
+
+    .hit-voting {
+        cursor: pointer
+    }
+    </style>
+</head>
+
+<body style = "min-height: 100vh;" class = "bg-dark bg-gradient">
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="#">There4U</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNavDropdown">
+    <ul class="navbar-nav">
+      <li class="nav-item active">
+        <a class="nav-link" href="{{url_for('index')}}">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{{url_for('colors')}}">Color Detector</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{{url_for('forum')}}">Forum</a>
+      </li>
+        <li class="nav-item">
+            <a class ="nav-link" href = "{{url_for('logout')}}">Logout</a>
+        </li>
+    </ul>
+  </div>
+</nav>
+<br>
+
+<div class="container mt-3 mb-5">
+    <div class="d-flex justify-content-center row">
+        <div class="d-flex flex-column mx-auto col-md-6">
+            <div class="d-flex flex-row align-items-center text-left comment-top p-2 bg-white border-bottom px-1">
+                <div class="d-flex flex-column-reverse flex-grow-0 align-items-center votings ml-1"><i class="fa fa-sort-up fa-2x hit-voting"></i><span><!----></span><i class="fa fa-sort-down fa-2x hit-voting"></i></div>
+                <div class="d-flex flex-column ml-3">
+                    <div class="d-flex flex-row post-title">
+                        <h5>{{question.title}}</h5>
+                        <a href = "{{url_for('profile',name=get_user(question.asker_id).username)}}">
+                        <span class="ml-2">({{get_user(question.asker_id).username}})</span>
+                        </a>
+                    </div>
+                    <div class="d-flex flex-row align-items-center align-content-center post-title">
+                        {% if get_user(question.asker_id) == current_user %}
+                        <a href = "{{url_for('delete',question_id=question.question_id)}}" class = "text-decoration-none"><span class="bdge bg-danger mr-1">delete</span></a>
+                        {% endif %}
+                        <span class="mr-2 comments">{{question.question_answers|length}} answers&nbsp;</span>
+                        </div>
+                </div>
+            </div>
+            {% if question.details %}
+            <div class="d-flex flex-row align-items-center text-left comment-top p-2 bg-white border-bottom px-1">
+                <p style = "color:black">{{question.details}}</p>
+            </div>
+            {% endif %}
+            <div class="d-flex flex-row align-items-center text-left comment-top p-2 bg-white border-bottom px-1">
+                <img src = "data:image/webp;base64,{{question.image_link}}" class = "rounded img-fluid mx-auto">
+            </div>
+            <div class="coment-bottom bg-white p-2 px-4">
+                <div class="d-flex flex-row add-comment-section mt-4 mb-4">
+                    <form action="{{ url_for('ask',question_id = question.question_id) }}" method = "POST">
+                        <div style = "float:left;" class = "mr-2">
+                        <input name = "answer" type="text" class="form-control mb-2" placeholder="Answer" required>
+                        </div>
+                        <div style = "float:left;">
+                        <input class="btn btn-primary mx-auto" type="submit" value = "Answer" />
+                        </div>
+                    </form>
+                </div>
+                {% for answer in question.question_answers %}
+                <div class="commented-section mt-2">
+                    <div class="d-flex flex-row align-items-center commented-user">
+                        <a class = "text-decoration-none text-black" href = "{{url_for('profile',name=get_user(answer.answerer_id).username)}}">
+                        <h5 class="mr-2">{{get_user(answer.answerer_id).username}}</h5></a>
+                    </div>
+                    <div class="comment-text-sm"><span>{{answer.reply}}</span></div>
+                    <div class="reply-section">
+                        <div class="d-flex flex-row align-items-center voting-icons"><i class="fa fa-sort-up fa-2x mt-3 hit-voting"></i><i class="fa fa-sort-down fa-2x mb-3 hit-voting"></i><span class="ml-2"> <!----></span>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+
+</html>

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="/static/css/bootstrap.css" rel="stylesheet" crossorigin="anonymous">
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+
+    <style>
+body,html {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    font-family: sans-serif;
+}
+
+.card {
+    margin-bottom: 10px;
+    border: none;
+    display: block;
+}
+
+.box {
+    padding: 40px;
+    background: #191919;
+    text-align: center;
+    transition: 0.25s;
+    margin-top: 80px
+}
+
+.box input[type="text"],
+.box input[type="password"] {
+    border: 0;
+    background: none;
+    display: block;
+    margin: 20px auto;
+    text-align: center;
+    border: 2px solid #3498db;
+    padding: 10px 10px;
+    width: 60%;
+    outline: none;
+    color: white;
+    border-radius: 24px;
+    transition: 0.25s
+}
+
+.box h1 {
+    color: white;
+    text-transform: uppercase;
+    font-weight: 500
+}
+
+.box input[type="text"]:focus,
+.box input[type="password"]:focus {
+    width: 80%;
+    border-color: #2ecc71
+}
+
+.box input[type="submit"] {
+    border: 0;
+    background: none;
+    display: block;
+    margin: 20px auto;
+    text-align: center;
+    border: 2px solid #2ecc71;
+    padding: 14px 40px;
+    outline: none;
+    color: white;
+    border-radius: 24px;
+    transition: 0.25s;
+    cursor: pointer
+}
+
+.box input[type="submit"]:hover {
+    background: #2ecc71
+}
+
+.forgot {
+    text-decoration: underline
+}
+
+    </style>
+</head>
+<body style = "min-height: 100vh;" class = "bg-dark bg-gradient text-white">
+
+  <div class="container">
+    <div class="row mx-auto">
+        <div class="col-md-6 mx-auto">
+            <div class="card">
+                <form action = "/login" method = "POST" class="box mx-auto">
+                  <h1>Login</h1>
+                    {% if message %}
+                    <p class ="text-danger">{{message}}</p>
+                    {% else %}
+                    <p class="text-muted"> Please enter your credentials!</p>
+                    {% endif %}
+                    <input type="text" class = "form-control" name="username" placeholder="Username">
+                    <input type="password" class = "form-control" name="psw" placeholder="Password">
+                    <a class="forgot text-muted" href="{{ url_for('signup') }}">New? Signup!</a>
+                    <input type="submit" name=""  value="Login" href="#">
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
