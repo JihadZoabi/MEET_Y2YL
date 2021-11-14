@@ -39,12 +39,3 @@ def color_pic(pic):
     if actual_name:
         return actual_name, rgb2hex(tpl)
     return closest_name, rgb2hex(tpl)
-
-
-im = cv.imread("photos/orange.jpg")
-#print(color_pic(im))
-
-color, hx = color_pic(im)
-
-# print(color)
-# print(hx)
